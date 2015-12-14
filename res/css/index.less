@@ -1,0 +1,90 @@
+.index{ // 首次进入
+
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout:none;
+    touch-callout:none;
+    .above{
+        width: 100%;
+        .tip{
+            width: 70%;
+            margin: 0 auto;
+            position: relative;
+            img.topi{
+            	display: block;
+            	width: 100%;
+            }
+            .btni{
+            	width: 100%;
+            	position: absolute;
+            	bottom: 15px;
+            	img{
+            		width: 70%;
+            		display: block;
+            		margin: 0 auto;
+            	}
+            	
+            }
+        }
+        .tip2{
+        	width: 100%;
+        	img{
+        		display: block;
+        		width: 100%;
+        	}
+        }
+
+    }
+    .footer{
+    	margin-top: 1em;
+        .tab{
+        	width: 60%;
+        	min-width: 220px;
+        	margin: 0 auto;
+        	border-radius: 0.5rem;
+        	border: 1px solid @btncolor;
+        	overflow: hidden;
+        	box-sizing: border-box;
+            .tab1,.tab2{
+            	float: left;
+            	box-sizing: border-box;
+				display: inline-block;
+				width: 50%;
+				height: 3em;
+				text-align: center;
+				span{
+					font-size: 1.2em;
+					line-height: 1.2em;
+					position: relative;
+					top:0.6em;
+				}
+							
+				
+            }
+            .active{
+            	background-color: @btncolor;
+            	color: @bgcolor;
+            }
+            
+        }
+        .content{
+        	width: 90%;
+        	margin: 0 auto;
+        	margin-top: 2em;
+            .content1,.content2{
+				width: 100%;
+				img{
+					width: 100%;
+				}
+            }
+            .show{
+            	display: block;
+            }
+            .hide{
+            	display: none;
+            }
+        }
+
+
+    }
+}
