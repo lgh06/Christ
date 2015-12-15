@@ -63,6 +63,7 @@ jQuery(function ($) {
 		$(document).on('touchend',selector,function(e){
 			endX = e.originalEvent.changedTouches[0].clientX;
 			lastMoveX = endX - startX + lastMoveX;
+			//TODO 位置检测 放置在正中间
 		});	
 		
 		$(document).on('webkitTransitionEnd transitionend',selector,function(e){
