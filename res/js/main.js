@@ -72,6 +72,9 @@ jQuery(function ($) {
 		
 		$(document).on('webkitTransitionEnd transitionend',selector,function(e){
 			$(selector).removeClass('transition');
+			
+			lastMoveX-=transitionMove;
+			
 		});	
 	}
 	
@@ -129,6 +132,7 @@ jQuery(function ($) {
 		
 		var move = 0;
 		move = offset.left + (width/2) - (bodywidth/2);
+		transitionMove = move;
 		var oldmarin = $(block).css('margin-left');
 		var newmargin = 0;
 		newmargin = parseFloat(oldmarin) - move;
