@@ -11,6 +11,7 @@ jQuery(function ($) {
 	
 	function appendImage(selector,images){
 		for(var i = 1;i<=images.length-1;i++){  //数组下标1到(8-1)
+			$(images[i]).data('order',i);
 			$(selector).append(images[i]);
 		}
 	}
@@ -46,6 +47,25 @@ jQuery(function ($) {
 			endX = e.originalEvent.changedTouches[0].clientX;
 			lastMoveX = endX - startX + lastMoveX;
 		});	
+	}
+	
+	/**
+	 * 将某个元素通过修改.top或者.btm的margin-left使其水平居中
+	 * modify parent element's margin-left to center the element.
+	 */
+	function fitToCenter(block,selector){
+		var $ele = $(selector);
+		var offset = $ele.offset();
+		var width = $ele.width();
+		var bodywidth = $('body').width();
+		
+		var move = 0;
+		move = offset.left + (width/2) - (bodywidth/2);
+		var oldmarin = $(block).css('margin-left');
+		var newmargin = 0;
+		newmargin = parseFloat(oldmarin) - move;
+		
+		$(block).css('margin-left',newmargin+'px');		
 	}
 	
 		
