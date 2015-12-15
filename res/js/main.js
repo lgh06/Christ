@@ -3,6 +3,7 @@ jQuery(function ($) {
 	var nowTopCenter = 0; //上部 当前靠近最中间的是第几个元素
 	var nowBtmCenter = 0; //下部 当前靠近最中间的是第几个元素
 	var transitionMove = 0; //transition效果的move距离 TODO
+	var selected = []; //记录选中的图片位置,以便于进一步判断是否拼对,及跳转
 	
 	/**
 	 * 生成图片
@@ -10,9 +11,19 @@ jQuery(function ($) {
 	 */
 	function genImages(position){
 		var images = [];
+		
+		var arr = [];
+		for(var i =1;i<=7;i++){
+			arr.push(i);
+		}
+		arr.sort(function(){
+			return Math.random()-0.5;
+		}); //arr下标从0开始
+		
 		for(var i =1;i<=7;i++){
 			images[i] = new Image();
-			images[i].src = "../res/img/face/"+i+"-"+(position == 'top'?'1':'2')+".png";
+			images[i].src = "../res/img/face/"+arr[i-1]+"-"+(position == 'top'?'1':'2')+".png";
+			$(images[i]).data('order',arr[i-1]);
 		}
 		return images; //images.length = 8
 	}
@@ -24,7 +35,6 @@ jQuery(function ($) {
 	 */
 	function appendImage(selector,images){
 		for(var i = 1;i<=images.length-1;i++){  //数组下标1到(8-1)
-			$(images[i]).data('order',i);
 			$(selector).append(images[i]);
 		}
 	}
@@ -65,9 +75,13 @@ jQuery(function ($) {
 			lastMoveX = endX - startX + lastMoveX;
 			//TODO 位置检测 放置在正中间
 			var centerPosition = findCenter(selector);
+			var $centerElement ;
 			if(centerPosition){
-				fitToCenter( selector , $(selector).find( 'img:eq('+(centerPosition-1)+')' ) );
+				$centerElement = $(selector).find( 'img:eq('+(centerPosition-1)+')' );
+				fitToCenter( selector , $centerElement );
+				selected[selector] = $centerElement.data('order');
 			}
+			console.log(selected)
 		});	
 		
 		$(document).on('webkitTransitionEnd transitionend',selector,function(e){
@@ -118,8 +132,6 @@ jQuery(function ($) {
 		
 	}
 	
-	window.findCenter = findCenter;
-	
 	/**
 	 * 将某个元素通过修改.top或者.btm的margin-left使其水平居中
 	 * modify parent element's margin-left to center the element.
@@ -140,8 +152,6 @@ jQuery(function ($) {
 		$(block).addClass('transition');
 		$(block).css('margin-left',newmargin+'px');		
 	}
-	window.fitToCenter = fitToCenter;
-	
 		
 	appendImage('.top',genImages('top'));
 	appendImage('.btm',genImages('btm'));
