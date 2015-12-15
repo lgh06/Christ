@@ -1,5 +1,12 @@
 jQuery(function ($) {
 	
+	var nowTopCenter = 0; //上部 当前靠近最中间的是第几个元素
+	var nowBtmCenter = 0; //下部 当前靠近最中间的是第几个元素
+	
+	/**
+	 * 生成图片
+	 * @param {Object} position
+	 */
 	function genImages(position){
 		var images = [];
 		for(var i =1;i<=7;i++){
@@ -9,6 +16,11 @@ jQuery(function ($) {
 		return images; //images.length = 8
 	}
 	
+	/**
+	 * 将生成的图片插入DOM
+	 * @param {Object} selector
+	 * @param {Object} images
+	 */
 	function appendImage(selector,images){
 		for(var i = 1;i<=images.length-1;i++){  //数组下标1到(8-1)
 			$(images[i]).data('order',i);
@@ -16,6 +28,10 @@ jQuery(function ($) {
 		}
 	}
 	
+	/**
+	 * 滑动 touch事件 改变margin-left
+	 * @param {Object} selector
+	 */
 	function slice(selector){
 		var startX = 0;
 		var nowX = 0;
