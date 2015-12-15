@@ -71,6 +71,49 @@ jQuery(function ($) {
 		});	
 	}
 	
+	
+	/**
+	 * 寻找中间元素
+	 */
+	function findCenter(block,width,margin){
+		var $img = $(block).find('img:first-child');
+		var firstPosition = $img.offset().left; //第一张图片所处的left位置
+		var bodywidth = $('body').width();
+		if(width === undefined){
+			var width = $img.width();	
+		}
+		if(margin === undefined){
+			var margin = parseFloat( $img.next('img').css('margin-left') );
+		}
+		
+		var nowPosition = firstPosition?firstPosition:0;
+		var lastPosition = 0;
+		for(var i = 1;i<=$(block).find('img').length;i++){
+			nowPosition += width+margin;
+			
+			if( (nowPosition - (bodywidth/2)) * (lastPosition - (bodywidth/2)) <=0 ){ //now在中间右侧，last在中间左侧
+				var numLeft = Math.abs( lastPosition - (bodywidth/2) );
+				var numRight = Math.abs( nowPosition - (bodywidth/2) );
+				if(numLeft>numRight){ //左侧距离远 返回右侧now的序号
+					return i;
+				}else if(numLeft<numRight){ //右侧距离远，返回左侧last的序号
+					return i-1;
+				}else{
+					return false;
+				}
+				
+				debugger;
+				
+			}
+			
+			lastPostion = nowPosition;
+		}
+		
+		
+	}
+	
+	window.findCenter = findCenter;
+	
 	/**
 	 * 将某个元素通过修改.top或者.btm的margin-left使其水平居中
 	 * modify parent element's margin-left to center the element.
