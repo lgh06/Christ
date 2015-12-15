@@ -35,8 +35,9 @@ jQuery(function ($) {
 			console.log(nowX);
 			
 			$(selector).css({
-				"transform":'translateX('+(nowX - startX + lastMoveX)+'px)',
-				"-webkit-transform":'translateX('+(nowX - startX + lastMoveX)+'px)'
+				/*"transform":'translateX('+(nowX - startX + lastMoveX)+'px)',
+				"-webkit-transform":'translateX('+(nowX - startX + lastMoveX)+'px)'*/
+				"margin-left":(nowX - startX + lastMoveX)+"px"
 			});
 			//$('body').html(changedList[0].clientY);
 		});
