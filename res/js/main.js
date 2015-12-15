@@ -39,6 +39,7 @@ jQuery(function ($) {
 		var lastMoveX = 0;
 		$(document).on('touchstart',selector,function(e){
 			e.preventDefault();
+			$(selector).removeClass('transition');
 			startX = e.originalEvent.changedTouches[0].clientX;
 		});
 		
@@ -63,6 +64,10 @@ jQuery(function ($) {
 			endX = e.originalEvent.changedTouches[0].clientX;
 			lastMoveX = endX - startX + lastMoveX;
 		});	
+		
+		$(document).on('webkitTransitionEnd transitionend',selector,function(e){
+			$(selector).removeClass('transition');
+		});	
 	}
 	
 	/**
@@ -81,8 +86,10 @@ jQuery(function ($) {
 		var newmargin = 0;
 		newmargin = parseFloat(oldmarin) - move;
 		
+		$(block).addClass('transition');
 		$(block).css('margin-left',newmargin+'px');		
 	}
+	window.fitToCenter = fitToCenter;
 	
 		
 	appendImage('.top',genImages('top'));
