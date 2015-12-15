@@ -2,6 +2,7 @@ jQuery(function ($) {
 	
 	var nowTopCenter = 0; //上部 当前靠近最中间的是第几个元素
 	var nowBtmCenter = 0; //下部 当前靠近最中间的是第几个元素
+	var transitionMove = 0; //transition效果的move距离 TODO
 	
 	/**
 	 * 生成图片
@@ -50,7 +51,6 @@ jQuery(function ($) {
 			
 			nowX = changedList[0].clientX;
 			
-			console.log(nowX);
 			
 			$(selector).css({
 				/*"transform":'translateX('+(nowX - startX + lastMoveX)+'px)',
@@ -64,6 +64,10 @@ jQuery(function ($) {
 			endX = e.originalEvent.changedTouches[0].clientX;
 			lastMoveX = endX - startX + lastMoveX;
 			//TODO 位置检测 放置在正中间
+			var centerPosition = findCenter(selector);
+			if(centerPosition){
+				fitToCenter( selector , $(selector).find( 'img:eq('+(centerPosition-1)+')' ) );
+			}
 		});	
 		
 		$(document).on('webkitTransitionEnd transitionend',selector,function(e){
@@ -102,7 +106,6 @@ jQuery(function ($) {
 					return false;
 				}
 				
-				debugger;
 				
 			}
 			
