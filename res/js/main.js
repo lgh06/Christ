@@ -159,4 +159,17 @@ jQuery(function ($) {
 	slice('.top');
 	slice('.btm');
 	
+	$('.bottom img').on('load',function(e){
+		var htmlHeight = $('html').height()
+		var height = $('.up').outerHeight() + $('.center').outerHeight() + $('.bottom').outerHeight()
+		if(height<htmlHeight){
+			var originPadding = parseFloat($('.center').css('padding'))
+			var plus = ( htmlHeight - height )/2
+			$('.center').css({
+				'padding': originPadding+plus+'px'+'  0'
+			})
+		}
+	})
+	
+	
 });
