@@ -160,7 +160,7 @@ jQuery(function ($) {
 	slice('.btm');
 	
 	$('.bottom img').on('load',function(e){
-		var htmlHeight = $('html').height();
+		var htmlHeight = $(window).height();
 		var height = $('.up').outerHeight() + $('.center').outerHeight() + $('.bottom').outerHeight();
 		if(height<htmlHeight){
 			var originPadding = parseFloat($('.center').css('padding'));
