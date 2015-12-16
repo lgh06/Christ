@@ -169,7 +169,10 @@ jQuery(function ($) {
 				'padding': originPadding+plus+'px'+'  0'
 			});
 		}
-	})
+	});
 	
+/*	$('.center').width($('body').width());
+	$('.center .top,.center .btm').width($('body').width()*5);
+*/	
 	
 });
