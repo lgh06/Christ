@@ -160,14 +160,14 @@ jQuery(function ($) {
 	slice('.btm');
 	
 	$('.bottom img').on('load',function(e){
-		var htmlHeight = $('html').height()
-		var height = $('.up').outerHeight() + $('.center').outerHeight() + $('.bottom').outerHeight()
+		var htmlHeight = $('html').height();
+		var height = $('.up').outerHeight() + $('.center').outerHeight() + $('.bottom').outerHeight();
 		if(height<htmlHeight){
-			var originPadding = parseFloat($('.center').css('padding'))
-			var plus = ( htmlHeight - height )/2
+			var originPadding = parseFloat($('.center').css('padding'));
+			var plus = ( htmlHeight - height )/2;
 			$('.center').css({
 				'padding': originPadding+plus+'px'+'  0'
-			})
+			});
 		}
 	})
 	
