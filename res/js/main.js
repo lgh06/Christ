@@ -3,6 +3,9 @@ jQuery(function ($) {
 	var nowTopCenter = 0; //上部 当前靠近最中间的是第几个元素
 	var nowBtmCenter = 0; //下部 当前靠近最中间的是第几个元素
 	var transitionMove = 0; //transition效果的move距离 TODO
+	var lastMoveX = [];
+	lastMoveX['.top'] = 0; //上方 上次移动的距离
+	lastMoveX['.btm'] = 0; //下方 上次移动的距离
 	var selected = []; //记录选中的图片位置,以便于进一步判断是否拼对,及跳转
 	
 	/**
@@ -47,7 +50,7 @@ jQuery(function ($) {
 		var startX = 0;
 		var nowX = 0;
 		var endX = 0;
-		var lastMoveX = 0;
+		
 		$(document).on('touchstart',selector,function(e){
 			e.preventDefault();
 			$(selector).removeClass('transition');
@@ -65,14 +68,14 @@ jQuery(function ($) {
 			$(selector).css({
 				/*"transform":'translateX('+(nowX - startX + lastMoveX)+'px)',
 				"-webkit-transform":'translateX('+(nowX - startX + lastMoveX)+'px)'*/
-				"margin-left":(nowX - startX + lastMoveX)+"px"
+				"margin-left":(nowX - startX + lastMoveX[selector])+"px"
 			});
 			//$('body').html(changedList[0].clientY);
 		});
 		
 		$(document).on('touchend',selector,function(e){
 			endX = e.originalEvent.changedTouches[0].clientX;
-			lastMoveX = endX - startX + lastMoveX;
+			lastMoveX[selector] = endX - startX + lastMoveX[selector];
 			//TODO 位置检测 放置在正中间
 			var centerPosition = findCenter(selector);
 			var $centerElement ;
@@ -87,11 +90,72 @@ jQuery(function ($) {
 		$(document).on('webkitTransitionEnd transitionend',selector,function(e){
 			$(selector).removeClass('transition');
 			
-			lastMoveX-=transitionMove;
+			lastMoveX[selector]-=transitionMove;
 			
 		});	
 	}
 	
+	function circleSlice(){
+		var startX = 0;
+		var nowX = 0;
+		var endX = 0;
+		var selector = '.circle';
+		var hrY = $('hr').offset().top;
+		var startY = 0;
+		$(document).on('touchstart',selector,function(e){
+			e.preventDefault();
+			startX = e.originalEvent.changedTouches[0].clientX;
+			startY = e.originalEvent.changedTouches[0].clientY;
+			if( startY < hrY ){
+				selector = '.top';
+			}else if(startY > hrY){
+				selector = '.btm';
+			}
+			$(selector).removeClass('transition');
+		});
+		
+		$(document).on('touchmove',selector,function($e){
+			var e = $e.originalEvent;
+			var list = e.touches;
+			var changedList = e.changedTouches;
+			
+			nowX = changedList[0].clientX;
+			
+			if(startY < hrY ){
+				selector = '.top';
+				 
+			}else if(startY > hrY){
+				selector = '.btm';
+			}			
+			
+			$(selector).css({
+				"margin-left":(nowX - startX + lastMoveX[selector])+"px"
+			});
+		});
+		
+		$(document).on('touchend',selector,function(e){
+			endX = e.originalEvent.changedTouches[0].clientX;
+			
+			if( startY < hrY ){
+				selector = '.top';
+			}else if(startY > hrY){
+				selector = '.btm';
+			}
+			
+			lastMoveX[selector] = endX - startX + lastMoveX[selector];
+			
+			
+			var centerPosition = findCenter(selector);
+			var $centerElement ;
+			if(centerPosition){
+				$centerElement = $(selector).find( 'img:eq('+(centerPosition-1)+')' );
+				fitToCenter( selector , $centerElement );
+				selected[selector] = $centerElement.data('order');
+			}
+			console.log(selected)
+		});	
+			
+	}
 	
 	/**
 	 * 寻找中间元素
@@ -159,6 +223,8 @@ jQuery(function ($) {
 	slice('.top');
 	slice('.btm');
 	
+
+	
 	//中间部分的高度fix 使撑满屏幕
 	$('.bottom img').on('load',function(e){
 		var htmlHeight = $(window).height();
@@ -176,6 +242,8 @@ jQuery(function ($) {
 			left:($('body').width()-200)/2+'px',
 			top:$('hr').offset().top-100+3+'px'
 		});
+		
+		circleSlice();		
 	});
 	
 
