@@ -51,13 +51,27 @@ jQuery(function ($) {
 		var nowX = 0;
 		var endX = 0;
 		
+		var hrY = $('hr').offset().top;
+		var startY = 0;		
+		
 		$(document).on('touchstart',selector,function(e){
+			var tmpSelector = selector;
 			e.preventDefault();
-			$(selector).removeClass('transition');
 			startX = e.originalEvent.changedTouches[0].clientX;
+			
+			if(selector == '.circle'){
+				startY = e.originalEvent.changedTouches[0].clientY;
+				if( startY < hrY ){
+					tmpSelector = '.top';
+				}else if(startY > hrY){
+					tmpSelector = '.btm';
+				}			
+			}
+			$(tmpSelector).removeClass('transition');
 		});
 		
 		$(document).on('touchmove',selector,function($e){
+			var tmpSelector = selector;
 			var e = $e.originalEvent;
 			var list = e.touches;
 			var changedList = e.changedTouches;
@@ -65,24 +79,43 @@ jQuery(function ($) {
 			nowX = changedList[0].clientX;
 			
 			
-			$(selector).css({
+			if(selector == '.circle'){
+				if(startY < hrY ){
+					tmpSelector = '.top';
+					 
+				}else if(startY > hrY){
+					tmpSelector = '.btm';
+				}			
+			}
+			
+			$(tmpSelector).css({
 				/*"transform":'translateX('+(nowX - startX + lastMoveX)+'px)',
 				"-webkit-transform":'translateX('+(nowX - startX + lastMoveX)+'px)'*/
-				"margin-left":(nowX - startX + lastMoveX[selector])+"px"
+				"margin-left":(nowX - startX + lastMoveX[tmpSelector])+"px"
 			});
 			//$('body').html(changedList[0].clientY);
 		});
 		
 		$(document).on('touchend',selector,function(e){
+			var tmpSelector = selector;
 			endX = e.originalEvent.changedTouches[0].clientX;
-			lastMoveX[selector] = endX - startX + lastMoveX[selector];
+			
+			if(selector == '.circle'){
+				if( startY < hrY ){
+					tmpSelector = '.top';
+				}else if(startY > hrY){
+					tmpSelector = '.btm';
+				}			
+			}
+			
+			lastMoveX[tmpSelector] = endX - startX + lastMoveX[tmpSelector];
 			//TODO 位置检测 放置在正中间
-			var centerPosition = findCenter(selector);
+			var centerPosition = findCenter(tmpSelector);
 			var $centerElement ;
 			if(centerPosition){
-				$centerElement = $(selector).find( 'img:eq('+(centerPosition-1)+')' );
-				fitToCenter( selector , $centerElement );
-				selected[selector] = $centerElement.data('order');
+				$centerElement = $(tmpSelector).find( 'img:eq('+(centerPosition-1)+')' );
+				fitToCenter( tmpSelector , $centerElement );
+				selected[tmpSelector] = $centerElement.data('order');
 			}
 			console.log(selected)
 		});	
@@ -93,68 +126,6 @@ jQuery(function ($) {
 			lastMoveX[selector]-=transitionMove;
 			
 		});	
-	}
-	
-	function circleSlice(){
-		var startX = 0;
-		var nowX = 0;
-		var endX = 0;
-		var selector = '.circle';
-		var hrY = $('hr').offset().top;
-		var startY = 0;
-		$(document).on('touchstart',selector,function(e){
-			e.preventDefault();
-			startX = e.originalEvent.changedTouches[0].clientX;
-			startY = e.originalEvent.changedTouches[0].clientY;
-			if( startY < hrY ){
-				selector = '.top';
-			}else if(startY > hrY){
-				selector = '.btm';
-			}
-			$(selector).removeClass('transition');
-		});
-		
-		$(document).on('touchmove',selector,function($e){
-			var e = $e.originalEvent;
-			var list = e.touches;
-			var changedList = e.changedTouches;
-			
-			nowX = changedList[0].clientX;
-			
-			if(startY < hrY ){
-				selector = '.top';
-				 
-			}else if(startY > hrY){
-				selector = '.btm';
-			}			
-			
-			$(selector).css({
-				"margin-left":(nowX - startX + lastMoveX[selector])+"px"
-			});
-		});
-		
-		$(document).on('touchend',selector,function(e){
-			endX = e.originalEvent.changedTouches[0].clientX;
-			
-			if( startY < hrY ){
-				selector = '.top';
-			}else if(startY > hrY){
-				selector = '.btm';
-			}
-			
-			lastMoveX[selector] = endX - startX + lastMoveX[selector];
-			
-			
-			var centerPosition = findCenter(selector);
-			var $centerElement ;
-			if(centerPosition){
-				$centerElement = $(selector).find( 'img:eq('+(centerPosition-1)+')' );
-				fitToCenter( selector , $centerElement );
-				selected[selector] = $centerElement.data('order');
-			}
-			console.log(selected)
-		});	
-			
 	}
 	
 	/**
@@ -243,7 +214,7 @@ jQuery(function ($) {
 			top:$('hr').offset().top-100+3+'px'
 		});
 		
-		circleSlice();		
+		slice('.circle');		
 	});
 	
 
