@@ -121,6 +121,9 @@ jQuery(function ($) {
 		});	
 		
 		$(document).on('webkitTransitionEnd transitionend',selector,function(e){
+			if(selector == '.circle'){
+				return;
+			}
 			$(selector).removeClass('transition');
 			
 			lastMoveX[selector]-=transitionMove;
