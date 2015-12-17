@@ -159,6 +159,7 @@ jQuery(function ($) {
 	slice('.top');
 	slice('.btm');
 	
+	//中间部分的高度fix 使撑满屏幕
 	$('.bottom img').on('load',function(e){
 		var htmlHeight = $(window).height();
 		var height = $('.up').outerHeight() + $('.center').outerHeight() + $('.bottom').outerHeight();
@@ -169,7 +170,15 @@ jQuery(function ($) {
 				'padding': originPadding+plus+'px'+'  0'
 			});
 		}
+		
+		//定位圆环位置
+		$('.circle').css({
+			left:($('body').width()-200)/2+'px',
+			top:$('hr').offset().top-100+3+'px'
+		});
 	});
+	
+
 	
 /*	$('.center').width($('body').width());
 	$('.center .top,.center .btm').width($('body').width()*5);
