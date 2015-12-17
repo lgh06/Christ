@@ -53,9 +53,9 @@ jQuery(function ($) {
 		
 		var hrY = $('hr').offset().top;
 		var startY = 0;		
+		var tmpSelector = selector;
 		
 		$(document).on('touchstart',selector,function(e){
-			var tmpSelector = selector;
 			e.preventDefault();
 			startX = e.originalEvent.changedTouches[0].clientX;
 			
@@ -71,22 +71,11 @@ jQuery(function ($) {
 		});
 		
 		$(document).on('touchmove',selector,function($e){
-			var tmpSelector = selector;
 			var e = $e.originalEvent;
 			var list = e.touches;
 			var changedList = e.changedTouches;
 			
 			nowX = changedList[0].clientX;
-			
-			
-			if(selector == '.circle'){
-				if(startY < hrY ){
-					tmpSelector = '.top';
-					 
-				}else if(startY > hrY){
-					tmpSelector = '.btm';
-				}			
-			}
 			
 			$(tmpSelector).css({
 				/*"transform":'translateX('+(nowX - startX + lastMoveX)+'px)',
@@ -97,16 +86,7 @@ jQuery(function ($) {
 		});
 		
 		$(document).on('touchend',selector,function(e){
-			var tmpSelector = selector;
 			endX = e.originalEvent.changedTouches[0].clientX;
-			
-			if(selector == '.circle'){
-				if( startY < hrY ){
-					tmpSelector = '.top';
-				}else if(startY > hrY){
-					tmpSelector = '.btm';
-				}			
-			}
 			
 			lastMoveX[tmpSelector] = endX - startX + lastMoveX[tmpSelector];
 			//TODO 位置检测 放置在正中间
