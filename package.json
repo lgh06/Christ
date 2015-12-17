@@ -1,0 +1,19 @@
+{
+  "name": "Christmas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "babel-cli": "^6.3.17",
+    "babel-preset-es2015": "^6.3.13",
+    "gulp-babel": "^6.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pre": "babel res/js -d res/js/lib"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
