@@ -200,10 +200,17 @@ jQuery(function ($) {
 		slice('.circle');		
 	});
 	
+	$('img.gen').click(function(){
+		if( selected['.top'] && selected['.btm'] ){
+			console.log('go on')
+		}else if(!selected['.top']){
+			alert('请从圆框中选择上方人物');
+		}else{
+			alert('请从圆框中选择下方人物');
+		}
+	});
+	
 
 	
-/*	$('.center').width($('body').width());
-	$('.center .top,.center .btm').width($('body').width()*5);
-*/	
 	
 });
