@@ -97,7 +97,7 @@ jQuery(function ($) {
 				fitToCenter( tmpSelector , $centerElement );
 				selected[tmpSelector] = $centerElement.data('order');
 			}
-			console.log(selected)
+			console.log(selected);
 		});	
 		
 		$(document).on('webkitTransitionEnd transitionend',selector,function(e){
@@ -180,7 +180,7 @@ jQuery(function ($) {
 
 	
 	//中间部分的高度fix 使撑满屏幕
-	$('.bottom img').on('load',function(e){
+	$('.bottom img:first-child').on('load',function(e){
 		var htmlHeight = $(window).height();
 		var height = $('.up').outerHeight() + $('.center').outerHeight() + $('.bottom').outerHeight();
 		if(height<htmlHeight){
