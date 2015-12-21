@@ -1,5 +1,31 @@
 (function(window,$) {
 	var bedApp = {};
+	
+	function percent(num){
+    	return num*100+'%';
+    }
+    var WHLTTool = function(config){
+    	if(typeof config == 'undefined'){
+	    	this.config = {
+	    		w:985,
+	    		h:559
+	    	}
+    	}else{
+    		this.config = config;
+    	}
+    }
+    
+    WHLTTool.prototype.set = function(div,w,h,l,t){
+		
+		var c = {};
+		w?(c.width=percent(w/this.config.w)):0;
+		h?(c.height=percent(h/this.config.h)):0;
+		l?(c.left=percent(l/this.config.w)):0;
+		t?(c.top=percent(t/this.config.h)):0;
+		
+		$(div).css(c);
+		return c; //返回备用
+    }	
 	bedApp.Main = function(){
 	
 		jQuery(function ($) {
@@ -230,6 +256,24 @@
 				$('img.snow').css('position','static');
 				$('.container').css('height','auto');
 			}
+			
+			//确定欢迎语
+			function genTip(order,username){
+				username = username || '欢欢';
+				var arr = [];
+				arr[0] = '';
+				arr[1] = '将在圣诞为<span>'+username+'</span><br>承包所有的表情';
+				arr[2] = '将在圣诞为<span>'+username+'</span><br>表演二人转';
+				arr[3] = '将在圣诞陪<span>'+username+'</span><br>度过烛光晚餐';
+				arr[4] = '将在圣诞做<span>'+username+'</span><br>一夜的老公';
+				arr[5] = '将在圣诞带<span>'+username+'</span><br>去北极看企鹅';
+				arr[6] = '将在圣诞约<span>'+username+'</span><br>看一场午夜零点的电影';
+				arr[7] = '将在圣诞求<span>'+username+'</span><br>成为他的小公举';
+				
+				return arr[order];
+			}
+			
+			$('p.tip').html(genTip(num));
 			
 		});
 	}
