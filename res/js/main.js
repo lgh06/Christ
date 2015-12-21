@@ -215,7 +215,17 @@
 			});
 		});	
 	};
-	
+
+	bedApp.Result = function(){
+		jQuery(function($){
+			if($('img.bg').height()<$('.container').height()){
+				$('img.bg').css({
+					position:'fixed',
+					bottom:0
+				});
+			}
+		});
+	}
 	window.bedApp = bedApp;
 
 })(window,jQuery);
