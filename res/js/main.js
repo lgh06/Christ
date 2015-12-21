@@ -225,6 +225,12 @@
 			var num = hash.substr(1,1);
 			$bg.attr('src','../res/img/2/'+num+'.png');
 			
+			var $con = $('body');
+			if($con.width()/$con.height()>360/530){
+				$('img.snow').css('position','static');
+				$('.container').css('height','auto');
+			}
+			
 		});
 	}
 	window.bedApp = bedApp;
