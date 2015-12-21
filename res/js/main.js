@@ -275,7 +275,58 @@
 			
 			$('p.tip').html(genTip(num));
 			
+			//shadow层显示
+			var shadowShow = 0;
+			$('.game').click(function(){
+				$('.shadow').addClass('show');
+				shadowShow = 1;
+			});
+			
+			$('.close').click(function(){
+				$('.shadow').removeClass('show');
+				shadowShow = 0;
+				//转针角度清零
+				setDegree($('.zhen'),0);
+			});
+			
+			function setDegree($obj,deg){  
+			    $obj.css({  
+			        'transform':     'rotate('+deg+'deg)',  
+			'-webkit-transform':     'rotate('+deg+'deg)',  
+			        '-moz-transform':'rotate('+deg+'deg)',  
+			        '-o-transform':  'rotate('+deg+'deg)'  
+			    });  
+			}  			
+			
+			//抽奖
+			var clicking = 0;
+			var time = 3; //剩下的抽奖机会
+			$('.zhen').click(function(){
+				var $that = $(this);
+				if(clicking|| !shadowShow || !time){
+					return;	
+				}
+				
+				$that.css({
+					'transition':'transform 2s'
+				});
+				
+				time--;
+				setDegree($(this),1170);
+				
+				clicking = 1;
+				$that.on('webkitTransitionEnd transitionend',function(){
+					clicking = 0;
+				});
+			});
+			
+			
+			
 		});
+	}
+	
+	bedApp.Zhuan = function(){
+		alert(2)
 	}
 	window.bedApp = bedApp;
 
