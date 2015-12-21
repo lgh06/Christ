@@ -218,12 +218,21 @@
 
 	bedApp.Result = function(){
 		jQuery(function($){
-			if($('img.bg').height()<$('.container').height()){
-				$('img.bg').css({
+			var $bg = $('img.bg');
+			
+			var hash = window.location.hash || '#0';
+			
+			var num = hash.substr(1,1);
+			$bg.attr('src','../res/img/2/'+num+'.png');
+			
+			if($bg.height()<$('.container').height()){
+				$bg.css({
 					position:'fixed',
 					bottom:0
 				});
-			}
+			}			
+			
+			
 		});
 	}
 	window.bedApp = bedApp;
