@@ -1,31 +1,6 @@
 (function(window,$) {
 	var bedApp = {};
 	
-	function percent(num){
-    	return num*100+'%';
-    }
-    var WHLTTool = function(config){
-    	if(typeof config == 'undefined'){
-	    	this.config = {
-	    		w:985,
-	    		h:559
-	    	}
-    	}else{
-    		this.config = config;
-    	}
-    }
-    
-    WHLTTool.prototype.set = function(div,w,h,l,t){
-		
-		var c = {};
-		w?(c.width=percent(w/this.config.w)):0;
-		h?(c.height=percent(h/this.config.h)):0;
-		l?(c.left=percent(l/this.config.w)):0;
-		t?(c.top=percent(t/this.config.h)):0;
-		
-		$(div).css(c);
-		return c; //返回备用
-    }	
 	bedApp.Main = function(){
 	
 		jQuery(function ($) {
@@ -232,7 +207,11 @@
 			
 			$('img.gen').click(function(){
 				if( selected['.top'] && selected['.btm'] ){
-					console.log('go on')
+					if( selected['.top'] == selected['.btm'] ){
+						location.href = './result.html#'+selected['.btm'];  //TODO
+					}else{
+						location.href = './result.html#0';  //TODO
+					}
 				}else if(!selected['.top']){
 					alert('请从圆框中选择上方人物');
 				}else{
@@ -275,9 +254,17 @@
 			
 			$('p.tip').html(genTip(num));
 			
+			
+			$('.replay').click(function(){
+				location.href = './index.html'; //TODO 
+			});
+			
+			
+			
 			//shadow层显示
 			var shadowShow = 0;
 			$('.game').click(function(){
+				$('html,body').animate({scrollTop: 0},300);
 				$('.shadow').addClass('show');
 				shadowShow = 1;
 			});
@@ -319,8 +306,6 @@
 					clicking = 0;
 				});
 			});
-			
-			
 			
 		});
 	}
