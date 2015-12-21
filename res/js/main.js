@@ -288,6 +288,10 @@
 			//抽奖
 			var clicking = 0;
 			var time = 3; //剩下的抽奖机会
+			var playedTimes = 1; //第几次玩 TODO
+			if(playedTimes>1){ //TODO
+				$('.rechou').removeClass('show');
+			}
 			$('.zhen').click(function(){
 				var $that = $(this);
 				if(clicking|| !shadowShow || !time){
