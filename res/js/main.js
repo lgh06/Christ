@@ -274,6 +274,8 @@
 				shadowShow = 0;
 				//转针角度清零
 				setDegree($('.zhen'),0);
+				//分享增加机会 提示框隐藏
+				$('.panblock p').hide();
 			});
 			
 			function setDegree($obj,deg){  
@@ -287,15 +289,25 @@
 			
 			//抽奖
 			var clicking = 0;
-			var time = 3; //剩下的抽奖机会
+			var time = 1; //剩下的抽奖机会 TODO
 			var playedTimes = 1; //第几次玩 TODO
 			if(playedTimes>1){ //TODO
 				$('.rechou').removeClass('show');
 			}
-			$('.zhen').click(function(){
+			$('.zhen').click(function(){ //点击指针
 				var $that = $(this);
-				if(clicking|| !shadowShow || !time){
+				if(clicking|| !shadowShow){
 					return;	
+				}
+				
+				if(time<1 && playedTimes>1){ //TODO
+					$('.panblock p').text('您已不能再抽奖').show();
+					return;
+				}
+				
+				if(!time){ //time为0
+					$('.panblock p').show();
+					return;
 				}
 				
 				$that.css({
